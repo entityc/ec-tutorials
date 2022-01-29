@@ -1,0 +1,20 @@
+$[log]
+$[function FindAllStringAttributes(space) -> (attributes)]
+$[let attributes  = @[]@]
+$[foreach entity in space.entities]
+$[foreach attribute in entity.attributes]
+$[switch attribute.type]
+$[case string]
+$[do attributes.add(attribute)]
+$[default]
+$[/switch]
+$[/foreach]
+$[/foreach]
+$[/function]
+
+$[call FindAllStringAttributes() -> (attributes:stringAttributeList)]
+String Attributes:
+$[foreach attribute in stringAttributeList.values]
+  ${attribute.entity.name}.${attribute.name}
+$[/foreach]
+$[/log]

@@ -1,0 +1,106 @@
+$[language java]
+$[domain Model]
+
+$[foreach entity in space.entities]
+  $[let className = entity|domain|name]
+  $[file domain.namespace|path className "java"]
+package ${domain.namespace};
+
+import java.util.UUID;
+$[receive distinct imports]
+
+  $[if entity.hasDescription]
+// ${entity.description}
+  $[/if]
+public class ${className}
+{
+  $[if entity.hasPrimaryKey]
+    private ${entity.primaryKeyAttribute.type|language} ${entity.primaryKeyAttribute|domain|name};
+  $[/if]
+  $[foreach attribute in entity.attributes]
+
+    $[if attribute.hasDescription]
+    // ${attribute.description}
+    $[/if]
+    private ${attribute.type|language} ${attribute|domain|name};
+  $[/foreach]
+  $[foreach relationship in entity.relationships]
+    $[if relationship.to.isOne]
+
+      $[if relationship.hasDescription]
+      // ${relationship.description}
+      $[/if]
+    private ${relationship.to.entity.primaryKeyAttribute.type|language} ${relationship|domain|name};
+    $[/if]
+  $[/foreach]
+
+  $[if entity.hasPrimaryKey]
+    $[let pkAttr = entity.primaryKeyAttribute]
+    public ${pkAttr.type|language} get${pkAttr|domain|name|capitalize}() {
+        return ${pkAttr|domain|name};
+    }
+
+    public void set${pkAttr|domain|name|capitalize}(${pkAttr.type|language} value) {
+        this.${pkAttr|domain|name} = value;
+    }
+  $[/if]
+  $[foreach attribute in entity.attributes]
+
+    public ${attribute.type|language} get${attribute|domain|name|capitalize}() {
+        return ${attribute|domain|name};
+    }
+
+    $[let domainAttribute = attribute|domain]
+    $[let variableName = domainAttribute|name]
+    public void set${attribute|domain|name|capitalize}(${attribute.type|language} ${variableName}) {
+    $[if attribute.hasConstraints]
+      $[foreach constraint in domainAttribute.constraints]
+        $[if constraint.hasDescription]
+        // ${constraint.description}
+        $[/if]
+        if (!(${constraint.expression|language})) {
+            return;
+        }
+      $[/foreach]
+    $[/if]
+        this.${variableName} = ${variableName};
+    }
+  $[/foreach]
+  $[foreach relationship in entity.relationships]
+    $[if relationship.to.isOne]
+      $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
+
+    public ${toEntityPk.type|language} get${relationship|domain|name|capitalize}() {
+        return ${relationship|domain|name};
+    }
+
+    public void set${relationship|domain|name|capitalize}(${toEntityPk.type|language} value) {
+        this.${relationship|domain|name} = value;
+    }
+    $[/if]
+  $[/foreach]
+
+  $[send imports]
+import ${entity|domain:DTO|fullname};
+  $[/send]
+    // Create instance from a DTO object
+  $[let dtoClassName = entity|domain:DTO|name]
+    public static ${className} fromDTO(${dtoClassName} dtoObject) {
+        ${className} modelObject = new ${className}();
+  $[if entity.hasPrimaryKey]
+    $[let pkAttr = entity.primaryKeyAttribute]
+        modelObject.${pkAttr|domain|name} = dtoObject.get${pkAttr|domain:DTO|name|capitalize}();
+  $[/if]
+  $[foreach attribute in entity.attributes]
+        modelObject.${attribute|domain|name} = dtoObject.get${attribute|domain:DTO|name|capitalize}();
+  $[/foreach]
+  $[foreach relationship in entity.relationships]
+    $[if relationship.to.isOne]
+        modelObject.${relationship|domain|name} = dtoObject.get${relationship|domain:DTO|name|capitalize}();
+    $[/if]
+  $[/foreach]
+        return modelObject;
+    }
+}
+  $[/file]
+$[/foreach]

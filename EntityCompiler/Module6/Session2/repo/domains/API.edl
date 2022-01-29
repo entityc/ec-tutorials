@@ -1,0 +1,13 @@
+domain APICode {
+    namespace com.example.api
+    naming entity {
+        prefix "TA"
+        suffix "Controller"
+    }
+}
+
+domain APIPath {
+    naming entity, attribute {
+        method dashesLowercase
+    }
+}

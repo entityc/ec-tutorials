@@ -1,0 +1,10 @@
+domain DTO {
+    namespace com.example.dto
+    naming entity {
+        prefix "TD"
+        suffix "Dto"
+    }
+    naming attribute {
+        primarykey id
+    }
+}

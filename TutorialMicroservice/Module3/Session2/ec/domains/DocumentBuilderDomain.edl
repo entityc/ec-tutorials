@@ -1,0 +1,59 @@
+domain DocumentBuilder (Tutorial) {
+
+    entity Tutorial {
+        attributes {
+            title    { T "section:title" }
+            summary  { T "section:body" }
+            overview { T "subsection" }
+        }
+        relationships {
+            modules  { T "subsection" }
+        }
+    }
+
+    entity Module {
+        T "section:prefix"
+        attributes {
+            number   { T "section:number" }
+            title    { T "section:title" }
+            summary  { T "section:body" }
+            overview { T "subsection" }
+        }
+        relationships {
+            sessions { T "subsection" }
+        }
+    }
+
+    entity Session {
+
+        attributes {
+            number     {  }
+            title      {  }
+            objective  {  }
+            discussion {  }
+        }
+        relationships {
+            exercises  {  }
+        }
+    }
+
+    entity Exercise {
+        T "section:prefix"
+        attributes {
+            number    { T "section:number", "if:multiple" }
+            overview  { T "section:body" }
+        }
+        relationships {
+            steps     { T "subsection" }
+        }
+    }
+
+    entity Step {
+        T "section:prefix"
+        attributes {
+            number       { T "section:number" }
+            instructions { T "subsection", "untitled" }
+        }
+
+    }
+}

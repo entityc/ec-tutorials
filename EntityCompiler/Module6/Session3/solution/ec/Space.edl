@@ -1,0 +1,40 @@
+space Space
+{
+    repository EntityRepository {
+        type github
+        organization "entityc"
+        name "ec-tutorials"
+        path "Module7/Session2/repo/entities"
+        tag "e1.0.0" // "e1.1.0" // "e1.2.0"
+    }
+
+    import Graphics, Accessories, User from EntityRepository
+
+    repository DomainRepository {
+        type github
+        organization "entityc"
+        name "ec-tutorials"
+        path "Module7/Session2/repo/domains"
+        tag "d1.0.0" // "d1.1.0"
+    }
+
+    import Database, Model, DTO, API from DomainRepository
+
+    repository StandardsRepository {
+        type github
+        organization "entityc"
+        name "ec-tutorials"
+        path "Module7/Session2/repo/standards"
+        tag "s1.0.0" // "s1.1.0"
+    }
+
+    import Units from StandardsRepository
+
+    repository TemplatesRepository {
+        type github
+        organization "entityc"
+        name "ec-tutorials"
+        path "Module7/Session3/repo/templates"
+        tag "t1.0.0" // "t1.1.0"
+    }
+}

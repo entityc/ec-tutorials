@@ -1,0 +1,16 @@
+$[language java]
+$[domain Simple]
+
+$[foreach entity in space.entities]
+    $[let className = entity|domain|name]
+    $[file domain.namespace|path className "java"]
+package ${domain.namespace};
+
+public class ${className}
+{
+    // member variables
+
+    // methods
+}
+    $[/file]
+$[/foreach]

@@ -1,0 +1,22 @@
+domain Model {
+    namespace com.example.model
+    naming module {
+        method capitalize
+    }
+    naming entity {
+        prefix "TM"
+    }
+    naming attribute {
+        primarykey id
+    }
+    naming enum {
+        prefix "TE"
+    }
+    naming enumItem {
+        method underscoreUppercase
+    }
+    naming typedef {
+        method standard
+        suffix "Type"
+    }
+}

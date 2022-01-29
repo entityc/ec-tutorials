@@ -1,0 +1,145 @@
+module tutorial {
+
+    D "This module contains entities for building a tutorial system."
+    T "tutorial"
+
+    entity Tutorial {
+        D "Represents an entire tutorial with modules and sessions."
+        primarykey uuid tutorialId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            unique string identifier     { D "A unique identifier associated with this tutorial." }
+
+            virtual string title {
+                D "The localized title of the tutorial."
+            }
+            optional virtual string summary {
+                D "The localized summary of the tutorial used when summarizing all tutorials in a view."
+            }
+            optional virtual string overview {
+                D "Tutorial overview in logged in user's preferred language."
+            }
+        }
+
+        relationships {
+            many Module modules {
+                D "The modules of a tutorial."
+            }
+            one User createdUser {
+                D "The user that created the tutorial."
+            }
+            one Content titleContent {
+                D "The title content (multi-language capable)."
+            }
+            optional one Content summaryContent {
+                D "The summary content (multi-language capable)."
+            }
+            optional one Content overviewContent {
+                D "The overview content (multi-language capable)."
+            }
+        }
+    }
+
+    entity Module {
+        D "Represents a module within the tutorial. A module is a big partition of the tutorial."
+
+        primarykey uuid moduleId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            int32 number { D "Represents the module number." }
+
+            virtual string title {
+                D "The localized title of the module."
+            }
+            optional virtual string summary {
+                D "The localized summary of the module used when sumarizing all modules of a tutorial."
+            }
+            optional virtual string overview {
+                D "Module overview in logged in user's preferred language."
+            }
+        }
+
+        relationships {
+            parent one Tutorial tutorial         { D "The tutorial to which this module belongs." }
+            many Session sessions                { D "The sessions of this module." }
+            one Content titleContent             { D "The title content (multi-language capable)." }
+            optional one Content summaryContent  { D "The summary content (multi-language capable)." }
+            optional one Content overviewContent { D "The overview content (multi-language capable)." }
+        }
+    }
+
+    entity Session {
+        D "Represents a session within a module. A session typically tries to teach a single concept."
+        primarykey uuid sessionId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            virtual string title {
+                D "The localized title of the session."
+            }
+            virtual string objective {
+                D "The localized objective of the session."
+            }
+            virtual string discussion {
+                D "The localized discussion section of the session."
+            }
+            int32 number { D "The session number." }
+        }
+
+        relationships {
+            parent one Module module               { D "The module to which this session belongs." }
+            many Exercise exercises                { D "The exercises of this session." }
+            one Content titleContent               { D "The title content (multi-language capable)." }
+            optional one Content objectiveContent  { D "The objective content (multi-language capable)." }
+            optional one Content discussionContent { D "The discussion content (multi-language capable)." }
+        }
+    }
+
+    entity Exercise {
+        D "Represents an exercise within a session. A session typically only has one exercise but it can have"
+        D "more than one if the session is big. An exercise gives the student some hands on experience with the"
+        D "material covered by its session."
+
+        primarykey uuid exerciseId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            int32 number { D "The exercise number." }
+            optional virtual string overview {
+                D "Exercise overview in logged in user's preferred language."
+            }
+        }
+
+        relationships {
+            parent one Session session           { D "The session to which this exercise belongs." }
+            many Step steps                      { D "The steps of this exercise." }
+            optional one Content overviewContent { D "The overview content (multi-language capable)." }
+        }
+    }
+
+    entity Step {
+        D "An exercise is broken down into smaller steps where a single step has the user perform a small"
+        D "task as part of the exercise."
+        primarykey uuid stepId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            int32 number { D "The step number." }
+            virtual string instructions {
+                D "Step content in logged in user's preferred language."
+            }
+        }
+
+        relationships {
+            parent one Exercise exercise  { D "The exercise to which this step belongs." }
+            one Content content           { D "The instructions content (multi-language capable)." }
+        }
+    }
+}

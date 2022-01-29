@@ -1,0 +1,17 @@
+domain Database (Tutorial) {
+
+    entity HumanPlayer rename person {
+        attributes {
+            rename playerId to person_id
+            rename experiencePoints to xp
+        }
+    }
+    entity MagicSpell {
+        attributes {
+            int32 options replaces {
+                (16) castEnergy
+                (16) weight
+            }
+        }
+    }
+}

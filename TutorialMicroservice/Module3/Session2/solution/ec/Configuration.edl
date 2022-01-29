@@ -1,0 +1,67 @@
+configuration Tutorial
+{
+    output Project {
+        path ""
+    }
+
+    output ServerCode {
+        path "src/main/java"
+    }
+
+    output SourceMain {
+        path "src/main"
+    }
+
+    templates {
+        import from ServerTemplates
+
+        template PomTemplate in "pom" {
+            output primary Project
+        }
+
+        template Microservice {
+            output primary ServerCode
+        }
+
+        template SecurityTemplate in "security" {
+            output primary ServerCode
+        }
+
+        template LocalizationAuthor in "localization" {
+            output primary ServerCode
+        }
+
+        template AdminConsole in "web/thymeleaf-bootstrap/admin" {
+            output primary SourceMain
+            config {
+                "appTitle" : "Tutorial Central Admin",
+                "appHomeMessage": "This website was built as part of an Entity Compiler tutorial to show the power of the Entitle Compiler and templates written for it. The templates used generate a website implemented with Springboot, Thymeleaf and Bootstrap. It includes user authentication and this web admin console. ",
+                "adminUrlPrefix" : "admin/"
+            }
+        }
+        template AuthPageTemplate in "web/thymeleaf-bootstrap/auth" {
+            output primary SourceMain
+        }
+
+        template LocalizedMessagesTemplate in "web/thymeleaf-bootstrap" {
+            output primary SourceMain
+        }
+
+        template DocumentBuilderAuthor  in "documentBuilder" {
+            output primary ServerCode
+        }
+    }
+
+    output DatabaseMigrationResources {
+        path "src/main/resources/db/migration"
+    }
+
+    output DatabaseSchema {
+        path "schema"
+    }
+
+    transform Postgres {
+        output primary DatabaseMigrationResources
+        output schema DatabaseSchema
+    }
+}

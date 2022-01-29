@@ -1,0 +1,12 @@
+domain Model {
+    namespace com.example.model
+    naming entity {
+        prefix "ZM"
+    }
+    naming attribute {
+        primarykey id
+    }
+    naming relationship {
+        suffix "Id"
+    }
+}

@@ -1,0 +1,26 @@
+configuration Tutorial
+{
+    output Project {
+        path ""
+    }
+
+    templates {
+        import from ServerTemplates
+        template PomTemplate in "pom" {
+            output primary Project
+        }
+    }
+
+    output DatabaseMigrationResources {
+        path "src/main/resources/db/migration"
+    }
+
+    output DatabaseSchema {
+        path "schema"
+    }
+
+    transform Postgres {
+        output primary DatabaseMigrationResources
+        output schema DatabaseSchema
+    }
+}

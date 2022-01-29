@@ -1,0 +1,67 @@
+domain Localization (Tutorial) {
+
+    entity User {
+        relationships {
+            preferredLanguage { T "language:preferred" }
+        }
+    }
+
+    entity Language {
+        T "language"
+        attributes {
+            code { T "language:code" }
+        }
+    }
+
+    entity Tutorial {
+        attributes {
+            title    { T "content" = "titleContent" }
+            summary  { T "content" = "summaryContent" }
+            overview { T "content" = "overviewContent" }
+        }
+    }
+
+    entity Module {
+        attributes {
+            title    { T "content" = "titleContent" }
+            summary  { T "content" = "summaryContent" }
+            overview { T "content" = "overviewContent" }
+        }
+    }
+
+    entity Session {
+        attributes {
+            title      { T "content" = "titleContent" }
+            objective  { T "content" = "objectiveContent" }
+            discussion { T "content" = "discussionContent" }
+        }
+    }
+
+    entity Exercise {
+        attributes {
+            overview { T "content" = "overviewContent" }
+        }
+    }
+
+    entity Step {
+        attributes {
+            instructions  { T "content" = "content" }
+        }
+    }
+
+    entity Content {
+        T "content"
+        attributes {
+            localizedText {
+                T "language:preferred"
+            }
+        }
+    }
+
+    entity LocalizedContent {
+        T "content:localized"
+        attributes {
+            text { T "content:text" }
+        }
+    }
+}

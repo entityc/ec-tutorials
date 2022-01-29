@@ -1,0 +1,67 @@
+space Space
+{
+}
+
+entity Player {
+    D "A player in the game."
+    primarykey uuid playerId
+
+    attributes {
+        string firstName {
+            D "First name of the player."
+            constraint correctLength {
+                length(firstName) >=1 && length(firstName) <= 15
+            }
+        }
+        string lastName {
+            D "Last name of the player."
+            constraint correctLength {
+                length(firstName) >=3 && length(firstName) <= 20
+            }
+        }
+        int64 experiencePoints { D "Experience Points" }
+        int32 level {
+            D "Level achieved."
+            constraint levelValue {
+                level <= 12
+            }
+        }
+        int32 health { D "Amount of health remaining." }
+        int32 magicEnergy { D "Amount of energy remaining used to cast magic spells." }
+        int64 coins { D "Number of coins the player has." }
+    }
+
+    relationships {
+        many PlayerMagicSpell magicSpells
+    }
+}
+
+entity PlayerMagicSpell {
+    D "Represents a magic spell in a players inventory of spells."
+
+    primarykey uuid playerMagicSpellId
+
+    attributes {
+        int32 remainingCasts { D "Number of casts a player has left for this magic spell." }
+    }
+
+    relationships {
+        parent one Player player { D "A player that has one of these magic spells." }
+        one MagicSpell magicSpell { D "The magic spell the player has." }
+    }
+}
+
+entity MagicSpell {
+    D "Gives you the ability to do magical things."
+    primarykey uuid magicSpellId
+
+    attributes {
+        string name { D "Name of the magic spell." }
+        int32 castEnergy { D "The amount of energy it requires to cast it." }
+        int64 price { D "How much it costs to buy." }
+        int32 weight { D "How much it weighs. This affects how many spells a player can carry." }
+    }
+
+    relationships {
+    }
+}

@@ -1,0 +1,41 @@
+$[language java]
+$[domain APICode]
+
+$[foreach entity in space.entities]
+  $[let className = entity|domain|name]
+  $[let dtoClassName = entity|domain:DTO|name]
+  $[let modelClassName = entity|domain:Model|name]
+  $[file domain.namespace|path className "java"]
+package ${domain.namespace};
+
+import java.util.UUID;
+import com.example.ValidationException;
+$[receive distinct imports]
+
+public class ${className} {
+
+  $[send imports]
+import ${entity|domain:DTO|fullname};
+import ${entity|domain:Model|fullname};
+  $[/send]
+
+    // POST /api/${entity|domain:APIPath|name}
+    public ${dtoClassName} create${entity.name}(${dtoClassName} dtoObject) throws ValidationException {
+  $[foreach attribute in entity.attributes]
+    $[if attribute.hasConstraints]
+      $[send imports]
+import java.util.List;
+      $[/send]
+      $[* Replace this with code to see if the dtoObject has any constraint violations and throw
+          an exception if so. *]
+    $[/if]
+  $[/foreach]
+        ${modelClassName} modelObject = ${modelClassName}.fromDTO(dtoObject);
+  $[if entity.hasPrimaryKey]
+        modelObject.set${entity.primaryKeyAttribute|domain:Model|name|capitalize}(UUID.randomUUID());
+  $[/if]
+        return ${dtoClassName}.fromModel(modelObject);
+    }
+}
+  $[/file]
+$[/foreach]

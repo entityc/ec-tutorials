@@ -1,0 +1,15 @@
+configuration Tutorial
+{
+    output Source {
+        path "src"
+    }
+
+    templates {
+        template PublisherTemplate {
+            output primary Source
+        }
+        template AuthorTemplate {
+            output primary Source
+        }
+    }
+}

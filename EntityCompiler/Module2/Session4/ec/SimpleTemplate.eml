@@ -1,0 +1,6 @@
+$[log]
+$[foreach entity in space.entities]
+$[foreach attribute in entity.attributes]
+$[/foreach]
+$[/foreach]
+$[/log]

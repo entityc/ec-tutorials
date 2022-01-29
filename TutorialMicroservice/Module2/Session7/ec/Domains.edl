@@ -1,0 +1,6 @@
+domain Database (Tutorial) {
+
+    namespace db.migration
+
+    entity Module rename tutorial_module
+}

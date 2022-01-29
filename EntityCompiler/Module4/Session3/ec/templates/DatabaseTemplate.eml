@@ -1,0 +1,13 @@
+$[log]
+=========== DATABASE ===========
+$[foreach entity in space.entities]
+
+Table: ${entity|name}
+$[if entity.hasPrimaryKey]
+    PK:     ${entity.primaryKeyAttribute|name}
+$[/if]
+$[foreach attribute in entity.attributes]
+    Column: ${attribute|name}
+$[/foreach]
+$[/foreach]
+$[/log]

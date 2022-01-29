@@ -1,0 +1,24 @@
+$[author to com.example.tutorial.publishing]
+
+    $[author to outlet top phase=initial]
+        $[let addCharisma = entity.hasTag("character")]
+    $[/author]
+
+    $[author to outlet members]
+        $[if addCharisma]
+    private int charisma;
+        $[/if]
+    $[/author]
+
+    $[author to outlet methods]
+        $[if addCharisma]
+    public int getCharisma() {
+        return charisma;
+    }
+
+    public void setCharisma(int charisma) {
+        this.charisma = charisma;
+    }
+        $[/if]
+    $[/author]
+$[/author]

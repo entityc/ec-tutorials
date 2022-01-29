@@ -1,0 +1,8 @@
+module graphics {
+    typedef int32 HighColor16 {
+        D "A 16-bit RGB color format that gives extra range for green."
+        (5) red { D "Red" }
+        (6) green { D "Green" }
+        (5) blue { D "Blue" }
+    }
+}

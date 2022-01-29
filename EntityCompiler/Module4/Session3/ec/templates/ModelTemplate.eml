@@ -1,0 +1,28 @@
+$[log]
+=========== MODEL ===========
+$[foreach module in space.modules]
+
+MODULE: ${module|name}
+$[foreach typedef in module.typedefs]
+
+  Typedef: ${typedef|name}
+$[/foreach]
+$[foreach enum in module.enums]
+
+  Enum: ${enum|name}
+$[foreach item in enum.items]
+    ${item.value}) ${item|name}
+$[/foreach]
+$[/foreach]
+$[foreach entity in module.entities]
+
+  Class: ${entity|name}
+$[if entity.hasPrimaryKey]
+      PK:     ${entity.primaryKeyAttribute|name}
+$[/if]
+$[foreach attribute in entity.attributes]
+      Member: ${attribute|name}
+$[/foreach]
+$[/foreach]
+$[/foreach]
+$[/log]

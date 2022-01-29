@@ -1,0 +1,6 @@
+domain Database {
+    naming entity, attribute {
+        method underscoreLowercase
+        without units
+    }
+}

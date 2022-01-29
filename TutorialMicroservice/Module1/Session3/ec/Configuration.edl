@@ -1,0 +1,13 @@
+configuration Tutorial
+{
+    output Project {
+        path ""
+    }
+
+    templates {
+        import from ServerTemplates
+        template PomTemplate in "pom" {
+            output primary Project
+        }
+    }
+}

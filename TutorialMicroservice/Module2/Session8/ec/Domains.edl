@@ -1,0 +1,47 @@
+domain Database (Tutorial) {
+
+    namespace db.migration
+
+    entity Module rename tutorial_module
+}
+
+domain DTO (Tutorial) {
+    entity Tutorial {
+        view APIGet {
+            relationships {
+                include to-many entity Module as modules with view APIGet
+            }
+        }
+    }
+    entity Module {
+        view APIGet {
+            relationships {
+                include to-one entity Tutorial with view Reference
+                include to-many entity Session as sessions with view APIGet
+            }
+        }
+    }
+    entity Session {
+        view APIGet {
+            relationships {
+                include to-one entity Module with view Reference
+                include to-many entity Exercise as exercises with view APIGet
+            }
+        }
+    }
+    entity Exercise {
+        view APIGet {
+            relationships {
+                include to-one entity Session with view Reference
+                include to-many entity Step as steps with view APIGet
+            }
+        }
+    }
+    entity Step {
+        view APIGet {
+            relationships {
+                include to-one entity Exercise with view Reference
+            }
+        }
+    }
+}

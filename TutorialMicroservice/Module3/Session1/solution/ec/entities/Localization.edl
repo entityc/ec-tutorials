@@ -1,0 +1,64 @@
+module localization {
+
+    D "This module specifies entities you can use to build localized applications."
+    T "localization"
+
+    entity Language {
+
+        D "Represents a human language."
+
+        primarykey uuid languageId
+
+        attributes {
+            string name { D "Name of the language in its own language." }
+            string code { D "The 2-character ISO 639-1 code that represents the language." }
+        }
+
+        relationships {
+        }
+    }
+
+    entity Content {
+        D "A multi-language content. Translators would use one of the localized contents of this to create"
+        D "another localized content in their language."
+        primarykey uuid contentId
+
+        attributes {
+            creation date createdOn { D "When the object was created." }
+            virtual string localizedText {
+                D "The text in the user's preferred language."
+            }
+        }
+
+        relationships {
+            many LocalizedContent localizedContents {
+                D "Localized versions of this contents in multiple languages."
+            }
+        }
+    }
+
+    entity LocalizedContent {
+        D "Represents the content in a specific language."
+        primarykey uuid localizedContentId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            string text {
+                D "The localized text in the language associated with this object."
+            }
+        }
+
+        relationships {
+            parent one Content {
+                D "The parent content to which this localized content belongs."
+            }
+            one Language language {
+                D "The language in which the content is written."
+            }
+            one User lastModifiedBy {
+                D "The user that last modified this content."
+            }
+        }
+    }
+}

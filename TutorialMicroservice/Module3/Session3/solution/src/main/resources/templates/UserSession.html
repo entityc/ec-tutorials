@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}" />
+
+    <title th:text="${Tutorial.title}"></title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inscrybmde@1.11.6/dist/inscrybmde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/inscrybmde@1.11.6/dist/inscrybmde.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<div class="container-fluid">
+		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item active">
+				</li>
+			</ul>
+		</div>
+		<div class="mx-auto order-0">
+			<a class="navbar-brand mx-auto" th:text="${Tutorial.title}" href="/"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+			<ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span th:text="${loggedInUser.firstName}">user</span> </a>
+					<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
+						<li><a class="dropdown-item" href="/">Settings</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li><a class="dropdown-item" href="/logout" th:href="@{/logout}">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<br>
+<br>
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"> <a href="/">Home</a> </li>
+		<li class="breadcrumb-item"> <a th:href="@{/tutorial/{id}(id=${Tutorial.id})}" th:text="|${Tutorial.title}|">link</a> </li>
+		<li class="breadcrumb-item"> <a th:href="@{/module/{id}(id=${Module.id})}" th:text="|Module ${Module.number}: ${Module.title}|">link</a> </li>
+		<li class="breadcrumb-item active" aria-current="page">Session</li>
+    </ol>
+  </nav>
+	<input type="hidden" id="markdown-content-hidden" th:value="${SessionMarkdown}"/>
+	<div id="markdown-content" class="markdown-body"/>
+	<script>
+		document.getElementById('markdown-content').innerHTML =
+		  marked(document.getElementById('markdown-content-hidden').value, {pedantic: false, gfm: true});
+	</script>
+</div>
+<br>
+<hr/>
+<div class="position-relative">
+	<div class="position-absolute top-50 start-0" th:unless="${prevSession == null}">
+		<a th:href="@{/session/{id}(id=${prevSession.id})}"><button type="button" class="btn btn-secondary" aria-pressed="true" th:text="|Session ${prevSession.number}: ${prevSession.title}|">Prev</button></a>
+	</div>
+	<div class="position-absolute top-50 end-0" th:unless="${nextSession == null}" align="right">
+		<a th:href="@{/session/{id}(id=${nextSession.id})}"><button type="button" class="btn btn-secondary" aria-pressed="true" th:text="|Session ${nextSession.number}: ${nextSession.title}|">Next</button></a>
+	</div>
+</div>
+<br>
+<p>&nbsp;</p>
+
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.6.0/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

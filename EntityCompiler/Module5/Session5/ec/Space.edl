@@ -1,0 +1,35 @@
+space Space
+{
+}
+
+entity Player {
+    D "A player in the game."
+    primarykey uuid playerId
+
+    attributes {
+        string firstName {
+            D "First name of the player."
+            constraint correctLength {
+                D "Make sure first name is the correct length."
+                length(firstName) >=1 && length(firstName) <= 15
+            }
+        }
+        string lastName {
+            D "Last name of the player."
+            constraint correctLength {
+                D "Make sure last name is the correct length."
+                length(lastName) >=3 && length(lastName) <= 20
+            }
+        }
+        int64 experiencePoints { D "Experience Points" }
+        int32 level {
+            D "Level achieved."
+            constraint levelValue {
+                level <= 12
+            }
+        }
+        int32 health { D "Amount of health remaining." }
+        int32 magicEnergy { D "Amount of energy remaining used to cast magic spells." }
+        int64 coins { D "Number of coins the player has." }
+    }
+}

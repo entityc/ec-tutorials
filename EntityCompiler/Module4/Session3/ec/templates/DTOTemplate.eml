@@ -1,0 +1,13 @@
+$[log]
+=========== DTO ===========
+$[foreach entity in space.entities]
+
+Class: ${entity|name}
+$[if entity.hasPrimaryKey]
+    PK:     ${entity.primaryKeyAttribute|name}
+$[/if]
+$[foreach attribute in entity.attributes]
+    Member: ${attribute|name}
+$[/foreach]
+$[/foreach]
+$[/log]

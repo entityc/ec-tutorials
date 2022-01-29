@@ -1,0 +1,168 @@
+space Space
+{
+    namespace org.entitycompiler.tutorial
+
+    D "The Tutorial Service is generated using the Entity Compiler (EC) to demonstrate how the compiler can"
+    D "be used to create a real fully working server application. This is actually one of the modules in the"
+    D "Entity Compiler Tutorial."
+
+    metadata {
+        "microserviceIdentifier" : "ec-tutorial-service",
+        "microserviceTitle" : "Entity Compiler Tutorial Service",
+        "basePackage" : "org.entitycompiler",
+        "databaseName" : "ECTutorialService"
+    }
+
+    repository ServerTemplates {
+        type github
+        organization "entityc"
+        name "ec-library"
+        path "templates/server/springboot"
+        tag "v0.13.0"
+    }
+
+    repository LanguageRepo {
+        type github
+        organization "entityc"
+        name "ec-library"
+        path "languages"
+        tag "v0.15.0"
+    }
+
+    import Java from LanguageRepo
+
+    // Domains
+    repository DomainRepo {
+        type github
+        organization "entityc"
+        name "ec-library"
+        path "domains"
+        tag "v0.13.0"
+    }
+
+    import Database, Exception, Utils, Model, Repository, DTO, JSONDTO, DTOMapper from DomainRepo
+}
+
+module tutorial {
+
+    D "This module contains entities for building a tutorial system."
+    T "tutorial"
+
+    entity Tutorial {
+        D "Represents an entire tutorial with modules and sessions."
+        primarykey uuid tutorialId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            unique string identifier     { D "A unique identifier associated with this tutorial." }
+
+            string title {
+                D "The title of the tutorial."
+            }
+            optional string summary {
+                D "The summary of the tutorial used when sumarizing all tutorials in a view."
+            }
+            optional string overview {
+                D "Tutorial overview"
+            }
+        }
+
+        relationships {
+            many Module modules                  { D "The modules of a tutorial." }
+        }
+    }
+
+    entity Module {
+        D "Represents a module within the tutorial. A module is a big partition of the tutorial."
+
+        primarykey uuid moduleId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            int32 number { D "Represents the module number." }
+
+            string title {
+                D "The title of the module."
+            }
+            optional string summary {
+                D "The summary of the module used when sumarizing all modules of a tutorial."
+            }
+            optional string overview {
+                D "Module overview."
+            }
+        }
+
+        relationships {
+            parent one Tutorial tutorial         { D "The tutorial to which this module belongs." }
+            many Session sessions                { D "The sessions of this module." }
+        }
+    }
+
+    entity Session {
+        D "Represents a session within a module. A session typically tries to teach a single concept."
+        primarykey uuid sessionId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            string title {
+                D "The title of the session."
+            }
+            string objective {
+                D "The objective of the session."
+            }
+            string discussion {
+                D "The discussion section of the session."
+            }
+            int32 number { D "The session number." }
+        }
+
+        relationships {
+            parent one Module module               { D "The module to which this session belongs." }
+            many Exercise exercises                { D "The exercises of this session." }
+        }
+    }
+
+    entity Exercise {
+        D "Represents an exercise within a session. A session typically only has one exercise but it can have"
+        D "more than one if the session is big. An exercise gives the student some hands on experience with the"
+        D "material covered by its session."
+
+        primarykey uuid exerciseId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            int32 number                 { D "The exercise number." }
+            optional string overview {
+                D "Exercise overview."
+            }
+        }
+
+        relationships {
+            parent one Session session           { D "The session to which this exercise belongs." }
+            many Step steps                      { D "The steps of this exercise." }
+        }
+    }
+
+    entity Step {
+        D "An exercise is broken down into smaller steps where a single step has the user perform a small"
+        D "task as part of the exercise."
+        primarykey uuid stepId
+
+        attributes {
+            creation date createdOn      { D "When the object was created." }
+            modification date modifiedOn { D "When the object was last modified." }
+            int32 number { D "The step number." }
+            string instructions {
+                D "Step content."
+            }
+        }
+
+        relationships {
+            parent one Exercise exercise  { D "The exercise to which this step belongs." }
+        }
+    }
+}

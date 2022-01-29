@@ -1,0 +1,37 @@
+domain Model {
+    namespace com.example.model
+    naming entity {
+        prefix "ZM"
+    }
+    naming attribute {
+        primarykey id
+    }
+    naming relationship {
+        suffix "Id"
+    }
+}
+
+domain DTO {
+    namespace com.example.dto
+    naming entity {
+        prefix "ZD"
+        suffix "Dto"
+    }
+    naming attribute {
+        primarykey id
+    }
+}
+
+domain APICode {
+    namespace com.example.controller
+    naming entity {
+        prefix "ZA"
+        suffix "Controller"
+    }
+}
+
+domain APIPath {
+    naming entity, attribute {
+        method dashesLowercase
+    }
+}

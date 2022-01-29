@@ -1,0 +1,23 @@
+space Space
+{
+}
+
+entity Player {
+    D "A player in the game."
+    primarykey uuid playerId
+
+    attributes {
+        string name {
+            D "Name of the player."
+        }
+        int64 experiencePoints { D "Experience Points" }
+        int32 level {
+            D "Level achieved."
+        }
+        int32 health { D "Amount of health remaining." }
+        int64 coins { D "Number of coins the player has." }
+    }
+
+    relationships {
+    }
+}

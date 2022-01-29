@@ -1,0 +1,20 @@
+$[log]
+$[foreach typedef in space.typedefs]
+
+Typedef: ${typedef.name}
+$[/foreach]
+$[foreach enum in space.enums]
+
+Enum: ${enum.name}
+$[/foreach]
+$[foreach entity in space.entities]
+
+$[let qualifier = entity.isSecondary ? "Secondary " : ""]
+${qualifier}Entity: ${entity.name}
+$[foreach attribute in entity.attributes]
+  Attribute
+    Name: ${attribute.name}
+    Type: ${typeLongName}
+$[/foreach]
+$[/foreach]
+$[/log]

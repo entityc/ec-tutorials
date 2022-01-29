@@ -1,0 +1,28 @@
+configuration Tutorial
+{
+    output Source {
+        path "src"
+    }
+
+    templates {
+        template ModelClassTemplate {
+            output primary Source
+        }
+    }
+}
+language java {
+    types {
+        boolean boolean
+        int32 int
+        int64 long
+        float float
+        double double
+        string String nullable
+        date Date nullable
+        uuid UUID nullable
+        array List nullable
+        map Map nullable
+        enum enum nullable
+        byte "byte[]" nullable
+    }
+}

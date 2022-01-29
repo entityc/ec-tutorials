@@ -1,0 +1,33 @@
+space Space
+{
+    namespace org.entitycompiler.tutorial
+
+    D "The Tutorial Service is generated using the Entity Compiler (EC) to demonstrate how the compiler can"
+    D "be used to create a real fully working server application. This is actually one of the modules in the"
+    D "Entity Compiler Tutorial."
+
+    metadata {
+        "microserviceIdentifier" : "ec-tutorial-service",
+        "microserviceTitle" : "Entity Compiler Tutorial Service",
+        "basePackage" : "org.entitycompiler",
+        "databaseName" : "ECTutorialService"
+    }
+
+    repository ServerTemplates {
+        type github
+        organization "entityc"
+        name "ec-library"
+        path "templates/server/springboot"
+        tag "v0.13.0"
+    }
+
+    repository LanguageRepo {
+        type github
+        organization "entityc"
+        name "ec-library"
+        path "languages"
+        tag "v0.15.0"
+    }
+
+    import Java from LanguageRepo
+}

@@ -1,0 +1,36 @@
+configuration Tutorial
+{
+    output Project {
+        path ""
+    }
+
+    output ServerCode {
+        path "src/main/java"
+    }
+
+    templates {
+        import from ServerTemplates
+        template PomTemplate in "pom" {
+            output primary Project
+        }
+        template ExceptionTemplate in "exception" {
+            output primary ServerCode
+        }
+        template UtilsTemplate in "util" {
+            output primary ServerCode
+        }
+    }
+
+    output DatabaseMigrationResources {
+        path "src/main/resources/db/migration"
+    }
+
+    output DatabaseSchema {
+        path "schema"
+    }
+
+    transform Postgres {
+        output primary DatabaseMigrationResources
+        output schema DatabaseSchema
+    }
+}

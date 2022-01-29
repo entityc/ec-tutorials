@@ -1,0 +1,20 @@
+$[log]
+$[foreach typedef in space.typedefs]
+
+  Typedef: ${typedef.name}
+$[/foreach]
+$[foreach enum in space.enums]
+
+  Enum: ${enum.name}
+$[foreach item in enum.items]
+    ${item.value}) ${item.name}
+$[/foreach]
+$[/foreach]
+$[foreach entity in space.entities]
+
+  Entity: ${entity.name}
+$[foreach attribute in entity.attributes]
+      Attribute: ${attribute.name}
+$[/foreach]
+$[/foreach]
+$[/log]

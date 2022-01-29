@@ -1,0 +1,10 @@
+configuration Tutorial
+{
+    output Project {
+        path ""
+    }
+
+    templates {
+        import from ServerTemplates
+    }
+}

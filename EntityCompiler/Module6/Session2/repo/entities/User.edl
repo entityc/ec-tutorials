@@ -1,0 +1,35 @@
+module user {
+    enum PlayerRank {
+        Rookie = 1
+        SuperDuperRank = 5
+        Bronze = 2
+        Silver = 3
+        Gold = 4
+    }
+
+    secondary entity Social
+    {
+        attributes {
+            string email
+            string forumName
+            uuid forumId
+        }
+    }
+
+    entity HumanPlayer {
+        D "A player in the game."
+        primarykey uuid playerId
+
+        attributes {
+            PlayerRank rank
+            string name { D "Name of the player." }
+            HighColor16 primaryColor
+            int64 experiencePoints { D "Experience Points" }
+            int32 level { D "Level achieved." }
+            float health { D "Amount of health remaining from 0 to 1." }
+            double strength { D "How strong the player is, from 0 to 100." }
+            float height in centimeters { D "How tall the player is." }
+            Social social
+        }
+    }
+}

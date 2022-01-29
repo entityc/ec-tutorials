@@ -1,0 +1,98 @@
+space Space
+{
+}
+
+secondary entity HashedCloudAsset {
+    D "Represents a file asset located in the cloud, such as in S3. This also keeps track of the file's MD5 hash"
+    D "signature so clients can detect if it has changed without downloading it."
+
+    attributes {
+        string url {
+            D "The URL to the asset."
+        }
+        string bucketName {
+            D "The name of the S3 bucket holding the asset."
+        }
+        string path {
+            D "The path inside the bucket to the asset file."
+        }
+        byte[16] md5 {
+            D "The MD5 digest/hash of the asset file contents. This can be used by the client side to"
+            D "detect if there was a change without having to download the asset file."
+        }
+        int64 size {
+            D "The number of bytes contained in the file."
+        }
+    }
+}
+
+secondary entity CloudAsset {
+    D "Represents a file asset located in the cloud."
+
+    attributes {
+        string url {
+            D "The URL to the asset."
+        }
+        int64 size {
+            D "The number of bytes contained in the file."
+        }
+    }
+}
+
+// Example of a singular instantiation of a secondary entity
+entity Achievement {
+    D "Something you earn when you achieve something in the game."
+
+    T "release:object"
+
+    primarykey uuid achievementId
+
+    attributes {
+        string title
+        string description
+        int32 bonusPoints
+        creation date createdOn
+        modification date modifiedOn
+    }
+}
+
+entity AchievementVersion {
+    D "A version of the achievement that defines how it looks."
+
+    primarykey uuid achievementVersionId
+
+    attributes {
+        creation date createdOn
+        modification date modifiedOn
+        optional string notes
+
+        CloudAsset model {
+            D "The 3D model for this achievement."
+            contentType "application/x-blender"
+        }
+        HashedCloudAsset texture {
+            D "The texture to apply to the 3D model."
+            contentType "image/tga"
+        }
+    }
+    relationships {
+        parent one Achievement achievement
+    }
+}
+
+entity AchievementRelease {
+    D "Represents a release of a set of achievement versions."
+
+    primarykey uuid achievementRelease
+    
+    attributes {
+        string name
+        optional string notes
+        creation date createdOn
+        modification date modifiedOn
+    }
+    
+    relationships {
+        many AchievementVersion versions
+    }
+}

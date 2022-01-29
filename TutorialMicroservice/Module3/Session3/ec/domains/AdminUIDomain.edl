@@ -1,0 +1,79 @@
+domain AdminUI (Tutorial) {
+
+    entity Tutorial {
+        T "home", "edit"
+        attributes {
+            title        { T "summary", "detail", "headline:title", "breadcrumb:title" }
+            summary      { T "summary", "detail" }
+            overview     { T            "detail", "markdown" }
+        }
+        relationships {
+            modules         { T "detail" }
+        }
+    }
+
+    entity Module {
+        T "headline:prefix", "breadcrumb:prefix"
+        attributes {
+            number       { T "summary", "detail", "headline:number", "breadcrumb:number" }
+            title        { T "summary", "detail", "headline:title", "breadcrumb:title" }
+            summary      { T "summary", "detail" }
+            overview     { T            "detail", "markdown" }
+        }
+        relationships {
+            sessions        { T "detail" }
+        }
+    }
+
+    entity Session {
+        T "headline:prefix", "breadcrumb:prefix"
+        attributes {
+            number       { T "summary", "detail", "headline:number", "breadcrumb:number" }
+            title        { T "summary", "detail", "headline:title" }
+            objective    { T "summary", "detail", "markdown" }
+            discussion   { T            "detail", "markdown" }
+        }
+        relationships {
+            exercises         { T "detail" }
+        }
+    }
+
+    entity Exercise {
+        T "headline:prefix", "breadcrumb:prefix"
+        attributes {
+            number       { T "summary", "detail", "headline:number" }
+            overview     { T "summary", "detail", "markdown" }
+        }
+        relationships {
+            steps             { T "detail" }
+        }
+    }
+
+    entity Step {
+        T "headline:prefix", "breadcrumb:prefix"
+        attributes {
+            number         { T "summary", "detail", "headline:number", "breadcrumb:number" }
+            instructions   { T "summary", "detail", "markdown" }
+        }
+    }
+
+    entity Language {
+        T "home"
+        attributes {
+          name { T "summary", "detail", "headline:title" }
+          code { T "summary", "detail" }
+        }
+    }
+
+    entity User {
+        T "home", "edit"
+        attributes {
+            roles       { T "detail" }
+            email       { T "summary", "detail" }
+            firstName   { T "summary", "detail" }
+            lastName    { T "summary", "detail" }
+            enabled     { T "detail" }
+            createdOn   { T "detail" }
+        }
+    }
+}

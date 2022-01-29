@@ -1,0 +1,1 @@
+java -jar $EC_TUTORIAL_HOME/lib/ec.jar $@

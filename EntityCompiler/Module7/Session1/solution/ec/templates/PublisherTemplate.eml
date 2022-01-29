@@ -1,0 +1,34 @@
+$[language java]
+$[domain Simple]
+
+$[publisher com.example.tutorial.publishing]
+    $[foreach entity in space.entities]
+        $[let className = entity|domain|name]
+        $[file domain.namespace|path className "java"]
+package ${domain.namespace};
+
+$[outlet top
+  D "This outlet can be used for things declared outside of the class definition (such as imports) or can"
+  D "simply be used by an author to execute some template code before the other outlets execute."
+]
+$[/outlet]
+
+public class ${className}
+{
+    // member variables
+$[outlet members
+  D "This outlet is intended for member variables. The variable `entity` contains the entity"
+  D "associated with the class created by the template."
+]
+$[/outlet]
+
+    // methods
+$[outlet methods
+  D "This outlet is intended for methods. The variable `entity` contains the entity associated"
+  D "with the class created by the template."
+]
+$[/outlet]
+}
+        $[/file]
+    $[/foreach]
+$[/publisher]
