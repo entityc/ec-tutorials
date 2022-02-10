@@ -72,12 +72,12 @@ The first part of the tutorial just shows you how to get started in using the En
 
 ### Discussion
 
-When using the Entity Compiler in a project it is best to create a directory to contain files specific to the Entity Compiler. In this tutorial the directory used will be called just `ec` and it will be placed just inside the root directory of the project (in this case the tutorial session). 
+When using the Entity Compiler in a project it is best to create a directory to contain files specific to the Entity Compiler. In this tutorial the directory used will be called just `ec` and it will be placed just inside the root directory of the project or in its "source" (e.g., `src`) directory (in this case the tutorial session). 
 
 Every project typically has at least the following elements contained in one or more files that the compiler will read:
 
 |Element|File|Description|
-| -----	| --	| ---------	|
+| -----	| --- | ---------	|
 | Space	| `Space.edl`	| For the purpose of this part of the tutorial a space denotes where you will be generating code. Every project needs to define a primary space.	| 
 | Configuration	| `Configuration.edl`	| The configuration is where you configure how you want the compiler to transform entities to files via templates (or built in transforms). You can have multiple configurations based on what you want to do. For this tutorial we just use a single configuration.	| 
 

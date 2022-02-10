@@ -519,7 +519,7 @@ The student portal will show all available tutorials on the top page. Then if yo
 For the student portal we need to develop the following types source files:
 
 |Source File Type | Description |
-| -- | -- |
+| --- | --- |
 | Thymeleaf Template| This is responsible for generating the final HTML that is sent to the user's web browser. We will make four of these files as described below.|
 | Controller Class | The Controller class will establish the endpoints associated with the student portal and feed the Thymeleaf web pages with the data they need for rendering their content.|
 
@@ -528,7 +528,7 @@ For the student portal we need to develop the following types source files:
 We will develop four templates, one for each web page of the Student portal:
 
 | Template | Description |
-| -- | -- |
+| --- | --- |
 | `UserHome.html` | This will serve as the top page of the Student portal. It has a simple table listing out all of the templates hosted on the site. The user can click on a **Open** button to open that tutorial. This will take them to the tutorial page.|
 |`UserTutorial.html`| This displays some information about the tutorial itself then shows a list of its modules. The user can click on a **Open** button to open a module.|
 |`UserModule.html`| This displays some information about the module then shows a list of its sessions. The user can click on a **Open** button to open a session.|
@@ -588,7 +588,7 @@ The input variable `SessionMarkdown` contains the markdown document that our `Se
 The controller class is called `UserWebPageController.java` and supports endpoints needed by the Thymeleaf templates. These endpoints are as follows:
 
 | Endpoint | Page | Variables Set | Description |
-| -- | -- | -- | -- |
+| --- | --- | --- | --- |
 | `/` | `UserHome` | `TutorialList`| The home page of the student portal that displays a list of the tutorials.|
 | `/tutorial/{id}` | `UserTutorial` | `Tutorial`, `ModulesList`| When a user clicks **Open** on a tutorial from the home screen, this endpoint is invoked.|
 | `/module/{id}` | `UserModule` |`Tutorial`, `Module`, `SessionList` | When a user clicks **Open** on a module from the Tutorial page, this endpoint is invoked.|
