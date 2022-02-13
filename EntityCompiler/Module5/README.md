@@ -34,8 +34,8 @@ The *directory* and *filename* often are not hardcoded strings as above but inst
 
 ```
 $[foreach entity in space.entities]
-$[let className = entity|domain|name]
-$[file "" className "java"]
+    $[let className = entity|domain|name]
+    $[file "" className "java"]
 ...
 ```
 
@@ -87,13 +87,13 @@ Let's use a simple text file to illustrate how template output ends up in the fi
 ```
 $[file "doc" "Readme" "txt"]
 This will go to our text file.
-$[capture compilerName]
+    $[capture compilerName]
 Entity Compiler
-$[/capture]
+    $[/capture]
 The ${compilerName} is executing this template.
-$[log info]
+    $[log info]
 This should NOT go to the file.
-$[/log]
+    $[/log]
 That's it.
 $[/file]
 This is ignored since we closed the file.
@@ -155,20 +155,20 @@ $[language java]
 $[domain Model]
 
 $[foreach entity in space.entities]
-  $[let className = entity|domain|name]
-  $[file domain.namespace|path className "java"]
+    $[let className = entity|domain|name]
+    $[file domain.namespace|path className "java"]
 package ${domain.namespace};
 
 import java.util.UUID;
 
-  $[if entity.hasDescription]
+        $[if entity.hasDescription]
 // ${entity.description}
-  $[/if]
+        $[/if]
 public class ${className}
 {
 
 }
-  $[/file]
+    $[/file]
 $[/foreach]
 ```
 
@@ -213,9 +213,9 @@ Now for all the other attributes, they are similar to our primary key attribute 
 ```
   $[foreach attribute in entity.attributes]
 
-    $[if attribute.hasDescription]
+      $[if attribute.hasDescription]
     // ${attribute.description}
-    $[/if]
+      $[/if]
     private ${attribute.type|language} ${attribute|domain|name};
   $[/foreach]
 ```
@@ -232,13 +232,13 @@ The first thing we need to do is setup a `$[foreach]` loop to iterate through al
 
 ```
   $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
+      $[if relationship.to.isOne]
 
-      $[if relationship.hasDescription]
+          $[if relationship.hasDescription]
       // ${relationship.description}
-      $[/if]
+          $[/if]
     private ${relationship.to.entity.primaryKeyAttribute.type|language} ${relationship|domain|name};
-    $[/if]
+      $[/if]
   $[/foreach]
 ```
 
@@ -275,7 +275,7 @@ Next we need to templify the type and name of the variable. For the get and set 
 
 ```
   $[if entity.hasPrimaryKey]
-    $[let pkAttr = entity.primaryKeyAttribute]
+      $[let pkAttr = entity.primaryKeyAttribute]
     public ${pkAttr.type|language} get${pkAttr|domain|name|capitalize}() {
         return ${pkAttr|domain|name};
     }
@@ -313,8 +313,8 @@ Just as when we declared the member variables for relationships, we also iterate
 
 ```
   $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
-      $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
+      $[if relationship.to.isOne]
+          $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
 
     public ${toEntityPk.type|language} get${relationship|domain|name|capitalize}() {
         return ${relationship|domain|name};
@@ -323,7 +323,7 @@ Just as when we declared the member variables for relationships, we also iterate
     public void set${relationship|domain|name|capitalize}(${toEntityPk.type|language} value) {
         this.${relationship|domain|name} = value;
     }
-    $[/if]
+      $[/if]
   $[/foreach]
 ```
 
@@ -697,14 +697,14 @@ The template code to generate a `set` function would look like:
     $[let variableName = domainAttribute|name]
     public void set${attribute|domain|name|capitalize}(${attribute.type|language} ${variableName}) {
     $[if attribute.hasConstraints]
-      $[foreach constraint in domainAttribute.constraints]
-        $[if constraint.hasDescription]
+        $[foreach constraint in domainAttribute.constraints]
+            $[if constraint.hasDescription]
         // ${constraint.description}
-        $[/if]
+            $[/if]
         if (!(${constraint.expression|language})) {
             return;
         }
-      $[/foreach]
+        $[/foreach]
     $[/if]
         this.${variableName} = ${variableName};
     }
@@ -736,23 +736,23 @@ To accomplish this with a template we could do the following:
 
 ```
   $[foreach attribute in entity.attributes]
-    $[let domainAttribute = attribute|domain]
-    $[if attribute.hasConstraints]
-      $[send imports]
+      $[let domainAttribute = attribute|domain]
+      $[if attribute.hasConstraints]
+$[send imports]
 import java.util.List;
 import java.util.ArrayList;
-      $[/send]
-      $[let variableName = domainAttribute|name]
+$[/send]
+          $[let variableName = domainAttribute|name]
     public List<String> ${variableName}ConstraintsViolated() {
         List<String> violations = new ArrayList<>();
-      $[foreach constraint in domainAttribute.constraints]
+          $[foreach constraint in domainAttribute.constraints]
         if (!(${constraint.expression|language})) {
             violations.add("${constraint.name}");
         }
-      $[/foreach]
+          $[/foreach]
         return violations;
     }
-    $[/if]
+      $[/if]
   $[/foreach]
 ```
 
@@ -777,20 +777,20 @@ To accomplish this with a template we could do:
 
 ```
   $[foreach attribute in entity.attributes]
-    $[if attribute.hasConstraints]
-      $[send imports]
+      $[if attribute.hasConstraints]
+$[send imports]
 import java.util.List;
-      $[/send]
-      $[let violationsListName = attribute.name + "Violations"]
+$[/send]
+          $[let violationsListName = attribute.name + "Violations"]
         List<String> ${violationsListName} = dtoObject.${attribute.name}ConstraintsViolated();
         if (${violationsListName}.size() > 0) {
-      $[foreach constraint in attribute.constraints]
+          $[foreach constraint in attribute.constraints]
             if (${violationsListName}.contains("${constraint.name}")) {
                 throw new ValidationException("The constraint was not met: ${constraint.expression}");
             }
-      $[/foreach]
+          $[/foreach]
         }
-    $[/if]
+      $[/if]
   $[/foreach]
 ```
 

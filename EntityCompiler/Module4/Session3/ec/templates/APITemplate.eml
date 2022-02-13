@@ -1,10 +1,10 @@
 $[log]
 =========== API ===========
-$[foreach entity in space.entities]
-$[if entity.isSecondary]$[continue]$[/if]
+    $[foreach entity in space.entities]
+        $[if entity.isSecondary]$[continue]$[/if]
 
 API Class: ${entity|name}
 Get ${entity.name|title} List: GET /api/${entity|name}
 Returns objects of class ${entity|name}
-$[/foreach]
+    $[/foreach]
 $[/log]

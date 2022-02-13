@@ -54,28 +54,28 @@ In this module we will just concentrate on template code so the entity model is 
 Here we want to go through all entities and for each entity go through all its attributes. For each attribute we want to print out some long name for its type. To do this we will use the switch/case statements. Edit the `SimpleTemplate.eml`  file and just **under** the line `$[foreach attribute...]` add the following:
 
 ```
-$[switch attribute.type]
-$[case uuid]
-$[let typeLongName="Unique Identifier - 128 bits"]
-$[case int32]
-$[let typeLongName="32-bit Integer"]
-$[case int64]
-$[let typeLongName="64-bit Integer"]
-$[case float]
-$[let typeLongName="32-bit Floating Point"]
-$[case double]
-$[let typeLongName="64-bit Floating Point"]
-$[case string]
-$[let typeLongName="String of characters"]
-$[case enum]
-$[let typeLongName="Enum named " + attribute.type.name]
-$[case typedef]
-$[let typeLongName="Typedef named " + attribute.type.name]
-$[case entity]
-$[let typeLongName="Entity named " + attribute.type.name]
-$[default]
-$[let typeLongName="Unknown"]
-$[/switch]
+            $[switch attribute.type]
+                $[case string]
+                    $[let typeLongName = "String of characters"]
+                $[case int32]
+                    $[let typeLongName = "32-bit Integer"]
+                $[case int64]
+                    $[let typeLongName = "64-bit Integer"]
+                $[case double]
+                    $[let typeLongName = "64-bit Floating Point"]
+                $[case float]
+                    $[let typeLongName = "32-bit Floating Point"]
+                $[case uuid]
+                    $[let typeLongName = "Unique Identifier - 128 bits"]
+                $[case typedef]
+                    $[let typeLongName = "Typedef named " + attribute.type.name]
+                $[case enum]
+                    $[let typeLongName = "Enum named " + attribute.type.name]
+                $[case entity]
+                    $[let typeLongName = "Entity named " + attribute.type.name]
+                $[default]
+                    $[let typeLongName = "Unknown"]
+            $[/switch]
 ```
 
 For each unique attribute type it will set the variable `typeLongName` to some more descriptive name of the type.
@@ -163,30 +163,30 @@ Here we are going to do basically the same thing we did in the previous session 
 Edit the `SimpleTemplate.eml`  file and just **under** the line `$[foreach attribute...]` add the following:
 
 ```
-$[capture typeLongName]
-$[switch attribute.type]
-$[case uuid]
-Unique Identifier - 128 bits
-$[case int32]
-32-bit Integer
-$[case int64]
-64-bit Integer
-$[case float]
-32-bit Floating Point
-$[case double]
-64-bit Floating Point
-$[case string]
+            $[capture typeLongName]
+                $[switch attribute.type]
+                    $[case string]
 String of characters
-$[case enum]
-Enum named ${attribute.type.name}
-$[case typedef]
+                    $[case int32]
+32-bit Integer
+                    $[case int64]
+64-bit Integer
+                    $[case double]
+64-bit Floating Point
+                    $[case float]
+32-bit Floating Point
+                    $[case uuid]
+Unique Identifier - 128 bits
+                    $[case typedef]
 Typedef named ${attribute.type.name}
-$[case entity]
+                    $[case enum]
+Enum named ${attribute.type.name}
+                    $[case entity]
 Entity named ${attribute.type.name}
-$[default]
+                    $[default]
 Unknown
-$[/switch]
-$[/capture]
+                $[/switch]
+            $[/capture]
 ```
 
 Notice it has the same switch structure as the previous session but here it is now surrounded by a capture statement and the capture variable is the same as the variable used previously. The real different is that instead of using let statements, it simply includes the string values in the template itself. However, to insert the attribute type name, we have to use `${attribute.type.name}` to extract the attribute type name into the template stream.
@@ -403,20 +403,20 @@ $[let stringAttributeList = @[]@]
 Now just under the `$[foreach attribute...` statement add:
 
 ```
-$[switch attribute.type]
-$[case string]
-$[do stringAttributeList.add(attribute)]
-$[default]
-$[/switch]
+            $[switch attribute.type]
+                $[case string]
+                    $[do stringAttributeList.add(attribute)]
+                $[default]
+            $[/switch]
 ```
 
 This will add attributes of string type to that array we declared. Now after the second `$[/foreach]` statement (outside our entity loop) lets print out the attributes that we captured in our array:
 
 ```
 String Attributes:
-$[foreach attribute in stringAttributeList.values]
+    $[foreach attribute in stringAttributeList.values]
   ${attribute.entity.name}.${attribute.name}
-$[/foreach]
+    $[/foreach]
 ```
 
 This loops through our array and prints out the entity name "." attribute name.
@@ -534,28 +534,28 @@ They should now look like:
 
 ```
 ...
-$[let attributes  = @[]@]
+        $[let attributes = @[]@]
 ...
-$[do attributes.add(attribute)]
+                        $[do attributes.add(attribute)]
 ...
 ```
 
 **Above** the line `$[let attributes  = @[]@]` add a function declaration as follows:
 
 ```
-$[function FindAllStringAttributes(space) -> (attributes)]
+    $[function FindAllStringAttributes(space) -> (attributes)]
 ```
 
 Now just **under** the second `$[/foreach]` add a statement to end the function:
 
 ```
-$[/function]
+    $[/function]
 ```
 
 Now, under this we can call our new function so add:
 
 ```
-$[call FindAllStringAttributes() -> (attributes:stringAttributeList)]
+    $[call FindAllStringAttributes() -> (attributes:stringAttributeList)]
 ```
 
 Notice here we did not map the `space` argument which means we want it to automatically map to the `space` local variable at the point of this function call. Then we map `attributes` to a new local variable called `stringAttributeList` that we will use in our subsequent loop.
@@ -621,15 +621,15 @@ In this exercise we will start with the solution of the previous session but mak
 Edit `SimpleTemplate.eml`. We will start by renaming the function on the top to `FindAllAttributesOfType` and then add an argument to the function called `type`. That line should look like this:
 
 ```
-$[function FindAllAttributesOfType(space, type) -> (attributes)]
+    $[function FindAllAttributesOfType(space, type) -> (attributes)]
 ```
 
 Now inside this function, let's replace the whole `switch` structure to an `if` structure where we compare the `type` input to the attribute type. The `if` structure should look like this:
 
 ```
-$[if attribute.type.asString == type]
-$[do attributes.add(attribute)]
-$[/if]
+                $[if attribute.type.asString == type]
+                    $[do attributes.add(attribute)]
+                $[/if]
 ```
 
 Notice how we use `asString` to get the string value of the attribute type, then see if it is equal to the `type` input of the function. The rest of the function is the same.
@@ -637,7 +637,7 @@ Notice how we use `asString` to get the string value of the attribute type, then
 Now we should change the function call to match the new function name and pass in the `type` variable which is also the template input. This function call list should look like this:
 
 ```
-$[call FindAllAttributesOfType(type:type) -> (attributes:stringAttributeList)]
+    $[call FindAllAttributesOfType(type:type) -> (attributes:stringAttributeList)]
 ```
 
 Actually we really didn't need to specify `type:type` in the argument list since they are the same (like we are doing for `space`).

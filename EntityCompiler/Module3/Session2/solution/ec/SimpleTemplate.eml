@@ -1,5 +1,5 @@
 $[log]
-$[let str="playerAchievement"]
+    $[let str = "playerAchievement"]
 Original:     ${str}
 
 Case)
@@ -22,30 +22,30 @@ Words Lowercase:  ${str|words|lowercase}
 Dashes Lowercase: ${str|dashes|lowercase}
 
 Model)
-$[foreach enum in space.enums]
+    $[foreach enum in space.enums]
 
 Enum: ${enum.name|words|uppercase}
-$[foreach item in enum.items]
+        $[foreach item in enum.items]
     ${item.value}) ${item.name|title}
-$[/foreach]
-$[/foreach]
-$[foreach entity in space.entities]
+        $[/foreach]
+    $[/foreach]
+    $[foreach entity in space.entities]
 
 Entity: ${entity.name|words|uppercase}
-$[foreach attribute in entity.attributes]
+        $[foreach attribute in entity.attributes]
     Attribute: ${attribute.name|title}
-$[/foreach]
-$[/foreach]
+        $[/foreach]
+    $[/foreach]
 
 Wrap)
 
-$[capture paragraph]
+    $[capture paragraph]
 In this exercise we will work with entities
-$[foreach entity in space.entities]$[if entity#last && !entity#first] and $[elseif !entity#first], $[/if]${entity.name}$[/foreach]
+        $[foreach entity in space.entities]$[if entity#last && !entity#first] and $[elseif !entity#first], $[/if]${entity.name}$[/foreach]
  so that we can see how wrapping works to create a comment
 block
 to be used in code generation.
-$[/capture]
+    $[/capture]
 Raw Paragraph:
 ${paragraph}
 

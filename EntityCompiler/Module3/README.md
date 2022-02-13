@@ -295,15 +295,15 @@ Basically just go to each `$[foreach ]` and add `|sort` to the end of each list 
 
 ```
 ...
-$[foreach enum in space.enums|sort]
+    $[foreach enum in space.enums|sort]
 ...
-$[foreach item in enum.items|sort]
+        $[foreach item in enum.items|sort]
 ...
-$[foreach entity in space.entities|sort]
+    $[foreach entity in space.entities|sort]
 ...
-$[foreach attribute in entity.attributes|sort]
+        $[foreach attribute in entity.attributes|sort]
 ...
-$[foreach attribute in stringAttributes.values|sort]
+    $[foreach attribute in stringAttributes.values|sort]
 ...
 ```
 

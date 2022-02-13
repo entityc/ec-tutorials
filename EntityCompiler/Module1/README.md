@@ -79,9 +79,9 @@ In the `ec` directory create a file called `SimpleTemplate.eml` and add the foll
 
 ```
 $[log]
-$[foreach entity in space.entities]
+    $[foreach entity in space.entities]
 Entity: ${entity.name}
-$[/foreach]
+    $[/foreach]
 $[/log]
 
 ```
@@ -204,31 +204,31 @@ Now we need to enhance our template to print out these new attributes. As well, 
 
 ```
   Primary Key: ${entity.primaryKeyAttribute.type} ${entity.primaryKeyAttribute.name}
-$[foreach attribute in entity.attributes]
+        $[foreach attribute in entity.attributes]
   Attribute:
       name: ${attribute.name}
       type: ${attribute.type}
-$[if attribute.hasUnit]
+            $[if attribute.hasUnit]
       unit: ${attribute.unit.name} (${attribute.unit.abbreviation})
-$[/if]
+            $[/if]
 $[* Qualifiers *]
-$[if attribute.isUnique]
+            $[if attribute.isUnique]
       UNIQUE
-$[/if]
-$[if attribute.isOptional]
+            $[/if]
+            $[if attribute.isOptional]
       OPTIONAL
-$[/if]
-$[if attribute.isCreation]
+            $[/if]
+            $[if attribute.isCreation]
       CREATION
-$[/if]
-$[if attribute.isModification]
+            $[/if]
+            $[if attribute.isModification]
       MODIFICATION
-$[/if]
-$[if attribute.isArray]
+            $[/if]
+            $[if attribute.isArray]
       ARRAY
-$[/if]
+            $[/if]
 
-$[/foreach]
+        $[/foreach]
 ```
 
 The primary key of an entity can be accessed using its `primaryKeyAttribute` member which is the same as any attribute object and thus has `type` and `name` members. The `entity` variable from the outer loop has an `attributes` member that is a collection of its attribute so we simply use a `$[foreach]` statement to loop through all attributes.
@@ -418,9 +418,9 @@ Now we need to update the template to print out our new relationships.
 Edit the `SimpleTemplate.eml` file and add the following **under** the attribute foreach loop:
 
 ```
-$[foreach relationship in entity.relationships]
-  Relationship: ${relationship.name} ${relationship.to.plurality} ${relationship.to.entity.name}$[if relationship.isParent] (parent)$[/if-]
-$[/foreach]
+        $[foreach relationship in entity.relationships]
+  Relationship: ${relationship.name} ${relationship.to.plurality} ${relationship.to.entity.name}$[if relationship.isParent] (parent)$[/if]
+        $[/foreach]
 ```
 
 This will loop through all the relationships and print them out. Relationships have a `from` and a `to` - most of the time the `to` part of the relationship is used since the relationship is pulled from the `from` entity.
@@ -526,13 +526,13 @@ Since this is the first time to work with enums, we need to update the template 
 Edit `SimpleTemplate.eml`. Above the entity foreach insert the following lines:
 
 ```
-$[foreach enum in space.enums]
+    $[foreach enum in space.enums]
 
 Enum: ${enum.name}
-$[foreach item in enum.items]
+        $[foreach item in enum.items]
   Item: ${item.name} = ${item.value}
-$[/foreach]
-$[/foreach]
+        $[/foreach]
+    $[/foreach]
 ```
 
 This will print out all the enums and their items.

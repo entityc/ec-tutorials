@@ -91,7 +91,7 @@ For this intro we are simply going to invoke the compiler - nothing will be gene
 
 #### Step 1
 
-Change your working directory to the `Introduction` directory.
+Change your working directory to the `Session2` directory.
 
 #### Step 2
 

@@ -1,35 +1,35 @@
 $[log]
-$[foreach entity in space.entities]
+    $[foreach entity in space.entities]
 
 Entity: ${entity.name}
   Primary Key: ${entity.primaryKeyAttribute.type} ${entity.primaryKeyAttribute.name}
-$[foreach attribute in entity.attributes]
+        $[foreach attribute in entity.attributes]
   Attribute:
       name: ${attribute.name}
       type: ${attribute.type}
-$[if attribute.hasUnit]
+            $[if attribute.hasUnit]
       unit: ${attribute.unit.name} (${attribute.unit.abbreviation})
-$[/if]
+            $[/if]
 $[* Qualifiers *]
-$[if attribute.isUnique]
+            $[if attribute.isUnique]
       UNIQUE
-$[/if]
-$[if attribute.isOptional]
+            $[/if]
+            $[if attribute.isOptional]
       OPTIONAL
-$[/if]
-$[if attribute.isCreation]
+            $[/if]
+            $[if attribute.isCreation]
       CREATION
-$[/if]
-$[if attribute.isModification]
+            $[/if]
+            $[if attribute.isModification]
       MODIFICATION
-$[/if]
-$[if attribute.isArray]
+            $[/if]
+            $[if attribute.isArray]
       ARRAY
-$[/if]
+            $[/if]
 
-$[/foreach]
-$[foreach relationship in entity.relationships]
-  Relationship: ${relationship.name} ${relationship.to.plurality} ${relationship.to.entity.name}$[if relationship.isParent] (parent)$[/if-]
-$[/foreach]
-$[/foreach]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+  Relationship: ${relationship.name} ${relationship.to.plurality} ${relationship.to.entity.name}$[if relationship.isParent] (parent)$[/if]
+        $[/foreach]
+    $[/foreach]
 $[/log]

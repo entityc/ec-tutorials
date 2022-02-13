@@ -2,40 +2,40 @@ $[language java]
 $[domain DTO]
 
 $[foreach entity in space.entities]
-  $[let className = entity|domain|name]
-  $[file domain.namespace|path className "java"]
+    $[let className = entity|domain|name]
+    $[file domain.namespace|path className "java"]
 package ${domain.namespace};
 
 import java.util.UUID;
 $[receive distinct imports]
 
-  $[if entity.hasDescription]
+        $[if entity.hasDescription]
 // ${entity.description}
-  $[/if]
+        $[/if]
 public class ${className}
 {
-  $[if entity.hasPrimaryKey]
+        $[if entity.hasPrimaryKey]
     private ${entity.primaryKeyAttribute.type|language} ${entity.primaryKeyAttribute|domain|name};
-  $[/if]
-  $[foreach attribute in entity.attributes]
+        $[/if]
+        $[foreach attribute in entity.attributes]
 
-    $[if attribute.hasDescription]
+            $[if attribute.hasDescription]
     // ${attribute.description}
-    $[/if]
+            $[/if]
     private ${attribute.type|language} ${attribute|domain|name};
-  $[/foreach]
-  $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+            $[if relationship.to.isOne]
 
-      $[if relationship.hasDescription]
+                $[if relationship.hasDescription]
       // ${relationship.description}
-      $[/if]
+                $[/if]
     private ${relationship.to.entity.primaryKeyAttribute.type|language} ${relationship|domain|name};
-    $[/if]
-  $[/foreach]
+            $[/if]
+        $[/foreach]
 
-  $[if entity.hasPrimaryKey]
-    $[let pkAttr = entity.primaryKeyAttribute]
+        $[if entity.hasPrimaryKey]
+            $[let pkAttr = entity.primaryKeyAttribute]
     public ${pkAttr.type|language} get${pkAttr|domain|name|capitalize}() {
         return ${pkAttr|domain|name};
     }
@@ -43,22 +43,22 @@ public class ${className}
     public void set${pkAttr|domain|name|capitalize}(${pkAttr.type|language} value) {
         this.${pkAttr|domain|name} = value;
     }
-  $[/if]
-  $[foreach attribute in entity.attributes]
+        $[/if]
+        $[foreach attribute in entity.attributes]
 
     public ${attribute.type|language} get${attribute|domain|name|capitalize}() {
         return ${attribute|domain|name};
     }
 
-    $[let domainAttribute = attribute|domain]
-    $[let variableName = domainAttribute|name]
+            $[let domainAttribute = attribute|domain]
+            $[let variableName = domainAttribute|name]
     public void set${attribute|domain|name|capitalize}(${attribute.type|language} ${variableName}) {
         this.${attribute|domain|name} = ${variableName};
     }
-  $[/foreach]
-  $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
-      $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+            $[if relationship.to.isOne]
+                $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
 
     public ${toEntityPk.type|language} get${relationship|domain|name|capitalize}() {
         return ${relationship|domain|name};
@@ -67,47 +67,47 @@ public class ${className}
     public void set${relationship|domain|name|capitalize}(${toEntityPk.type|language} value) {
         this.${relationship|domain|name} = value;
     }
-    $[/if]
-  $[/foreach]
-  $[send imports]
+            $[/if]
+        $[/foreach]
+$[send imports]
 import ${entity|domain:Model|fullname};
-  $[/send]
+$[/send]
     // Create instance from a Model object
-  $[let modelClassName = entity|domain:Model|name]
+        $[let modelClassName = entity|domain:Model|name]
     public static ${className} fromModel(${modelClassName} modelObject) {
         ${className} dtoObject = new ${className}();
-  $[if entity.hasPrimaryKey]
-    $[let pkAttr = entity.primaryKeyAttribute]
+        $[if entity.hasPrimaryKey]
+            $[let pkAttr = entity.primaryKeyAttribute]
         dtoObject.${pkAttr|domain|name} = modelObject.get${pkAttr|domain:Model|name|capitalize}();
-  $[/if]
-  $[foreach attribute in entity.attributes]
+        $[/if]
+        $[foreach attribute in entity.attributes]
         dtoObject.${attribute|domain|name} = modelObject.get${attribute|domain:Model|name|capitalize}();
-  $[/foreach]
-  $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+            $[if relationship.to.isOne]
         dtoObject.${relationship|domain|name} = modelObject.get${relationship|domain:Model|name|capitalize}();
-    $[/if]
-  $[/foreach]
+            $[/if]
+        $[/foreach]
         return dtoObject;
     }
-  $[foreach attribute in entity.attributes]
-    $[let domainAttribute = attribute|domain]
-    $[if attribute.hasConstraints]
-    $[send imports]
+        $[foreach attribute in entity.attributes]
+            $[let domainAttribute = attribute|domain]
+            $[if attribute.hasConstraints]
+$[send imports]
 import java.util.List;
 import java.util.ArrayList;
-    $[/send]
-      $[let variableName = domainAttribute|name]
+$[/send]
+                $[let variableName = domainAttribute|name]
     public List<String> ${variableName}ConstraintsViolated() {
         List<String> violations = new ArrayList<>();
-      $[foreach constraint in domainAttribute.constraints]
-      $[* Replace this with code that checks for a constraint violation and adds the constraint name to the
+                $[foreach constraint in domainAttribute.constraints]
+$[* Replace this with code that checks for a constraint violation and adds the constraint name to the
           violations list for each violation. *]
-      $[/foreach]
+                $[/foreach]
         return violations;
     }
-    $[/if]
-  $[/foreach]
+            $[/if]
+        $[/foreach]
 }
-  $[/file]
+    $[/file]
 $[/foreach]

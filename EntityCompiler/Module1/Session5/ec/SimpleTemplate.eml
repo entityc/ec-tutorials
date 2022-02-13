@@ -1,13 +1,13 @@
 $[log]
-$[foreach entity in space.entities]
+    $[foreach entity in space.entities]
 
 Entity: ${entity.name}
-$[foreach attribute in entity.attributes]
-$[let attributeType = attribute.type]
+        $[foreach attribute in entity.attributes]
+            $[let attributeType = attribute.type]
   Attribute: ${attributeType} ${attribute.name}
-$[/foreach]
-$[foreach relationship in entity.relationships]
-  Relationship: ${relationship.name} ${relationship.to.plurality} ${relationship.to.entity.name}$[if relationship.isParent] (parent)$[/if-]
-$[/foreach]
-$[/foreach]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+  Relationship: ${relationship.name} ${relationship.to.plurality} ${relationship.to.entity.name}$[if relationship.isParent] (parent)$[/if]
+        $[/foreach]
+    $[/foreach]
 $[/log]

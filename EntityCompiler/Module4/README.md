@@ -110,7 +110,7 @@ Edit `SimpleTemplate.eml`. We will need to add an outer loop that loops through 
 Just below the `$[log]` line add:
 
 ```
-$[foreach module in space.modules]
+    $[foreach module in space.modules]
 
 MODULE: ${module.name|uppercase}
 ```
@@ -118,7 +118,7 @@ MODULE: ${module.name|uppercase}
 Then just above the `$[/log]` add:
 
 ```
-$[/foreach]
+    $[/foreach]
 ```
 
 to close the module foreach.
@@ -129,11 +129,11 @@ Update the template so the foreach statements look like this:
 
 ```
 ...
-$[foreach typedef in module.typedefs]
+        $[foreach typedef in module.typedefs]
 ...
-$[foreach enum in module.enums]
+        $[foreach enum in module.enums]
 ...
-$[foreach entity in module.entities]
+        $[foreach entity in module.entities]
 ...
 ```
 
@@ -651,7 +651,7 @@ For the entity primary key which is a table column, edit this line to include th
 For the other columns (which come from attributes), we not only want to transform attribute names to be column names, since the list of attributes can actually be influenced by the domain we want to pass the entity through the domain **before** accessing the list of attributes. So, for the attribute `$[foreach ...]` that line should look like this:
 
 ```
-$[foreach attribute in (entity|domain).attributes]
+        $[foreach attribute in (entity|domain).attributes]
 ```
 
 So `(entity|domain)` transforms the entity into what is actually a domain entity object. A domain based object has many of the same methods as its non-domain counterpart but the output of these methods are different based on how the domain is configured. In this case since the `Database` domain is configured to pack two attributes (`castEnergy` and `weight`) into a new attribute (`options`) of the `MagicSpell` entity, then when we get the `attributes` from that `MagicSpell` entity, it will have the `options` attribute and not the `castEnergy` and `weight` attributes.  As well, the `attributes` will contain domain attributes - meaning the entity's attributes have already passed through the `Database` domain so we don't need to do it again for each individual attribute.  For this reason, the following line **does not need to change**:
@@ -687,7 +687,7 @@ Like the previous template we will also pass the entity through the domain so th
 Change the `$[foreach ...]` line like in the previous template:
 
 ```
-$[foreach attribute in (entity|domain).attributes]
+        $[foreach attribute in (entity|domain).attributes]
 ```
 
 And now the line using the attribute to get its name doesn't need to change.

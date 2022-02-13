@@ -486,19 +486,19 @@ Now that we have our entity model set we can work on a template to output inform
 
 ```
 $[log]
-$[foreach entity in space.entities]
+    $[foreach entity in space.entities]
 
-$[let qualifier = entity.isSecondary ? "Secondary " : ""]
+        $[let qualifier = entity.isSecondary ? "Secondary " : ""]
 ${qualifier}Entity: ${entity.name}
-$[foreach attribute in entity.attributes]
-$[let attributeType = attribute.type]
-$[if attribute.isSecondaryEntityType]
-  $[let attributeType = attribute.typeEntity.name]
-$[/if]
-$[if attribute.isArray]$[let attributeType = attributeType + "[]"]$[/if]
+        $[foreach attribute in entity.attributes]
+            $[let attributeType = attribute.type]
+            $[if attribute.isSecondaryEntityType]
+                $[let attributeType = attribute.typeEntity.name]
+            $[/if]
+            $[if attribute.isArray]$[let attributeType = attributeType + "[]"]$[/if]
   Attribute: ${attributeType} ${attribute.name}
-$[/foreach]
-$[/foreach]
+        $[/foreach]
+    $[/foreach]
 $[/log]
 ```
 
@@ -608,9 +608,9 @@ At the top we will print out the typedefs defined (just one in our case). Add th
 $[foreach typedef in space.typedefs]
 
 Typedef: ${typedef.name}
-$[foreach bitField in typedef.bitFields]
+    $[foreach bitField in typedef.bitFields]
     BitField: ${bitField.name} [${bitField.width + bitField.low - 1}:${bitField.low}] (${bitField.width})
-$[/foreach]
+    $[/foreach]
 $[/foreach]
 ```
 
@@ -621,8 +621,8 @@ Next we will add code to detect which attributes have a typedef type and if so p
 ```
 $[let bitFields = attribute.bitFields]
 $[if attribute.type.isTypedef]
-$[let attributeType = attribute.type.name]
-$[let bitFields = attribute.type.bitFields]
+    $[let attributeType = attribute.type.name]
+    $[let bitFields = attribute.type.bitFields]
 $[/if]
 ```
 

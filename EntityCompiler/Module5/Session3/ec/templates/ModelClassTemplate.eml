@@ -2,39 +2,39 @@ $[language java]
 $[domain Model]
 
 $[foreach entity in space.entities]
-  $[let className = entity|domain|name]
-  $[file domain.namespace|path className "java"]
+    $[let className = entity|domain|name]
+    $[file domain.namespace|path className "java"]
 package ${domain.namespace};
 
 import java.util.UUID;
 
-  $[if entity.hasDescription]
+        $[if entity.hasDescription]
 // ${entity.description}
-  $[/if]
+        $[/if]
 public class ${className}
 {
-  $[if entity.hasPrimaryKey]
+        $[if entity.hasPrimaryKey]
     private ${entity.primaryKeyAttribute.type|language} ${entity.primaryKeyAttribute|domain|name};
-  $[/if]
-  $[foreach attribute in entity.attributes]
+        $[/if]
+        $[foreach attribute in entity.attributes]
 
-    $[if attribute.hasDescription]
+            $[if attribute.hasDescription]
     // ${attribute.description}
-    $[/if]
+            $[/if]
     private ${attribute.type|language} ${attribute|domain|name};
-  $[/foreach]
-  $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+            $[if relationship.to.isOne]
 
-      $[if relationship.hasDescription]
+                $[if relationship.hasDescription]
       // ${relationship.description}
-      $[/if]
+                $[/if]
     private ${relationship.to.entity.primaryKeyAttribute.type|language} ${relationship|domain|name};
-    $[/if]
-  $[/foreach]
+            $[/if]
+        $[/foreach]
 
-  $[if entity.hasPrimaryKey]
-    $[let pkAttr = entity.primaryKeyAttribute]
+        $[if entity.hasPrimaryKey]
+            $[let pkAttr = entity.primaryKeyAttribute]
     public ${pkAttr.type|language} get${pkAttr|domain|name|capitalize}() {
         return ${pkAttr|domain|name};
     }
@@ -42,8 +42,8 @@ public class ${className}
     public void set${pkAttr|domain|name|capitalize}(${pkAttr.type|language} value) {
         this.${pkAttr|domain|name} = value;
     }
-  $[/if]
-  $[foreach attribute in entity.attributes]
+        $[/if]
+        $[foreach attribute in entity.attributes]
 
     public ${attribute.type|language} get${attribute|domain|name|capitalize}() {
         return ${attribute|domain|name};
@@ -52,10 +52,10 @@ public class ${className}
     public void set${attribute|domain|name|capitalize}(${attribute.type|language} value) {
         this.${attribute|domain|name} = value;
     }
-  $[/foreach]
-  $[foreach relationship in entity.relationships]
-    $[if relationship.to.isOne]
-      $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
+        $[/foreach]
+        $[foreach relationship in entity.relationships]
+            $[if relationship.to.isOne]
+                $[let toEntityPk = relationship.to.entity.primaryKeyAttribute]
 
     public ${toEntityPk.type|language} get${relationship|domain|name|capitalize}() {
         return ${relationship|domain|name};
@@ -64,8 +64,8 @@ public class ${className}
     public void set${relationship|domain|name|capitalize}(${toEntityPk.type|language} value) {
         this.${relationship|domain|name} = value;
     }
-    $[/if]
-  $[/foreach]
+            $[/if]
+        $[/foreach]
 }
-  $[/file]
+    $[/file]
 $[/foreach]
