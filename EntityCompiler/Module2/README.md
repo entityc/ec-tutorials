@@ -199,7 +199,7 @@ Now we run our template:
 ./run.sh
 ```
 
-Since we are doing the same thing as the previous session, just a different way using the capture statement, the output is the same:
+The output looks almost identical from the previous session with one small difference. In the previous session the type string values were assigned using a string assignment, however with the `capture` instruction if we capture a line, it will include the carriage return at th end of the line. So when we print out our capture variable, it includes this carriage return as we can see in the output:
 
 ```
 Typedef: HighColor16
@@ -210,39 +210,52 @@ Entity: Player
   Attribute
     Name: rank
     Type: Enum named Rank
+
   Attribute
     Name: name
     Type: String of characters
+
   Attribute
     Name: color
     Type: Typedef named HighColor16
+
   Attribute
     Name: experiencePoints
     Type: 64-bit Integer
+
   Attribute
     Name: level
     Type: 32-bit Integer
+
   Attribute
     Name: health
     Type: 32-bit Floating Point
+
   Attribute
     Name: strength
     Type: 64-bit Floating Point
+
   Attribute
     Name: social
     Type: Entity named Social
+
 
 Secondary Entity: Social
   Attribute
     Name: email
     Type: String of characters
+
   Attribute
     Name: forumName
     Type: String of characters
+
   Attribute
     Name: forumId
     Type: Unique Identifier - 128 bits
+
 ```
+
+If you don't want this to happen, you can simply filter out the carriage return whitespace using the `trim` filter.
 
 ## Session 3: Send/Receive
 
