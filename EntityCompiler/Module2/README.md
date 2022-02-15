@@ -255,7 +255,7 @@ Secondary Entity: Social
 
 ```
 
-If you don't want this to happen, you can simply filter out the carriage return whitespace using the `trim` filter.
+If you don't want this to happen, you can simply filter out the carriage return whitespace using the `trim` filter (we will cover filters in a future module).
 
 ## Session 3: Send/Receive
 

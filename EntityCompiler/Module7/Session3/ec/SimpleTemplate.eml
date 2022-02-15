@@ -1,0 +1,10 @@
+$[log]
+    $[foreach entity in space.entities]
+
+Entity: ${entity.name}
+        $[foreach attribute in entity.attributes]
+            $[let attributeType = attribute.type]
+  Attribute: ${attributeType} ${attribute.name}
+        $[/foreach]
+    $[/foreach]
+$[/log]
