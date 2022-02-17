@@ -16,17 +16,17 @@ space Space
     repository ServerTemplates {
         type github
         organization "entityc"
-        name "ec-library"
-        path "templates/server/springboot"
-        tag "v0.13.0"
+        name "ec-springboot-lib"
+        path ""
+        tag "v0.9.0"
     }
 
     repository LanguageRepo {
         type github
         organization "entityc"
-        name "ec-library"
+        name "ec-std-lib"
         path "languages"
-        tag "v0.15.0"
+        tag "v0.9.0"
     }
 
     import Java from LanguageRepo
@@ -35,9 +35,9 @@ space Space
     repository DomainRepo {
         type github
         organization "entityc"
-        name "ec-library"
+        name "ec-std-lib"
         path "domains"
-        tag "v0.13.0"
+        tag "v0.9.0"
     }
 
     import Database, Exception, Utils, Model, Repository, DTO, JSONDTO from DomainRepo
