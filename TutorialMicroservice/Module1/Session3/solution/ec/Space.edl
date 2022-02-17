@@ -1,6 +1,6 @@
 space Space
 {
-    namespace org.entitycompiler.tutorial
+    namespace org.entityc.tutorial
 
     D "The Tutorial Service is generated using the Entity Compiler (EC) to demonstrate how the compiler can"
     D "be used to create a real fully working server application. This is actually one of the modules in the"
@@ -9,7 +9,7 @@ space Space
     metadata {
         "microserviceIdentifier" : "ec-tutorial-service",
         "microserviceTitle" : "Entity Compiler Tutorial Service",
-        "basePackage" : "org.entitycompiler",
+        "basePackage" : "org.entityc",
         "databaseName" : "ECTutorialService"
     }
 

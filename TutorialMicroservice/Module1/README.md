@@ -89,7 +89,7 @@ Now edit the `Space.edl` file in the `ec` folder. We will need to add some thing
 Just inside the `space Space {` block, add the following namespace declaration:
 
 ```
-    namespace org.entitycompiler.tutorial
+    namespace org.entityc.tutorial
 ```
 
 This namespace will represent your project's **base namespace** from which all other namespaces will be extended from. This means that when you use other templates in later sessions, they will generate Java classes that use this as the base part of their package name. 
@@ -104,7 +104,7 @@ Add the following under the `namespace` statement we added in the previous step:
     metadata {
         "microserviceIdentifier" : "ec-tutorial-service",
         "microserviceTitle" : "Entity Compiler Tutorial Service",
-        "basePackage" : "org.entitycompiler",
+        "basePackage" : "org.entityc",
         "databaseName" : "ECTutorialService"
     }
 ```
