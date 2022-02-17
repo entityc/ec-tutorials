@@ -647,7 +647,7 @@ An explanation of the code was made in the discussion section above.
 
 Now we need to add some code to the Controller class to set the `SessionMarkdown` variable to the session markdown document.
 
-Edit the file `UserWebPageController.java` in the `src/main/java/org/entitycompiler/tutorial/web/user` folder. Look for a line with the comment `set SessionMarkdown here with the markdown document for the session`. Replace this comment line with:
+Edit the file `UserWebPageController.java` in the `src/main/java/org/entityc/tutorial/web/user` folder. Look for a line with the comment `set SessionMarkdown here with the markdown document for the session`. Replace this comment line with:
 
 ```
         model.addAttribute("SessionMarkdown", sessionService.buildMarkdownDocSection(1, sessionDto, 1));

@@ -161,7 +161,7 @@ Now its time to run our run script:
 ./run.sh
 ```
 
-Under the `src/main/java` directory you should now see a directory tree starting with `org`. The exception classes are located in `org/entitycompiler/tutorial/exception` and the utility classes in `org/entitycompiler/tutorial/util`.
+Under the `src/main/java` directory you should now see a directory tree starting with `org`. The exception classes are located in `org/entityc/tutorial/exception` and the utility classes in `org/entityc/tutorial/util`.
 
 Notice how the base path (or package) is the same as our space's namespace. This is because the two domains we imported use a namespace that is extended from our space's namespace.
 
