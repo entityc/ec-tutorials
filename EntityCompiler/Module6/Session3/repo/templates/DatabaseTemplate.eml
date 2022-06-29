@@ -1,16 +1,14 @@
 $[domain Database]
 $[log]
-===========
- DATABASE
-===========
+=========== DATABASE ===========
     $[foreach entity in space.entities]
 
-Table> ${entity|domain|name}
+Table: ${entity|domain|name}
         $[if entity.hasPrimaryKey]
-    PK>     ${entity.primaryKeyAttribute|domain|name}
+    PK:     ${entity.primaryKeyAttribute|domain|name}
         $[/if]
         $[foreach attribute in (entity|domain).attributes]
-    Column> ${attribute|name}
+    Column: ${attribute|name}
         $[/foreach]
     $[/foreach]
 $[/log]

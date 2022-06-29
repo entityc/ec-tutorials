@@ -4,8 +4,8 @@ space Space
         type github
         organization "entityc"
         name "ec-tutorials"
-        path "Module7/Session2/repo/entities"
-        tag "e1.0.0" // "e1.1.0" // "e1.2.0"
+        path "EntityCompiler/Module6/Session2/repo/entities"
+        tag "main"
     }
 
     import Graphics, Accessories, User from EntityRepository
@@ -14,8 +14,8 @@ space Space
         type github
         organization "entityc"
         name "ec-tutorials"
-        path "Module7/Session2/repo/domains"
-        tag "d1.0.0" // "d1.1.0"
+        path "EntityCompiler/Module6/Session2/repo/domains"
+        tag "main"
     }
 
     import Database, Model, DTO, API from DomainRepository
@@ -24,8 +24,8 @@ space Space
         type github
         organization "entityc"
         name "ec-tutorials"
-        path "Module7/Session2/repo/standards"
-        tag "s1.0.0" // "s1.1.0"
+        path "EntityCompiler/Module6/Session2/repo/standards"
+        tag "main"
     }
 
     import Units from StandardsRepository
@@ -34,7 +34,7 @@ space Space
         type github
         organization "entityc"
         name "ec-tutorials"
-        path "Module7/Session3/repo/templates"
-        tag "t1.0.0" // "t1.1.0"
+        path "EntityCompiler/Module6/Session3/repo/templates"
+        tag "main"
     }
 }
