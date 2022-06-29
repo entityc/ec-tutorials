@@ -273,7 +273,7 @@ Below this we can import the units as follows:
 Since we are no longer going to read in our local `Units.edl` file, we should remove it from the `run.sh` script, it should now look like this:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl -tp ec/templates
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl -tp ec/templates
 ```
 
 #### Step 4
@@ -408,7 +408,7 @@ Notice how for the `DTOTemplate` and `ModelTemplate` their files were stored in 
 Now that we are going to import the templates we don't need to specify a template path on the command line. Edit `run.sh` and remove the `-tp` option. It should now look like:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl
 ```
 
 > If you plan to also have some local templates you can continue using this command line option.

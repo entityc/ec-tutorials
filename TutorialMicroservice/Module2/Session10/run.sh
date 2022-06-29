@@ -1,1 +1,1 @@
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl
