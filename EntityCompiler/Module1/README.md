@@ -108,7 +108,7 @@ This does two things. First it declares that you want to run a template called `
 Update the run script to tell the compiler where to find template files. Basically we just need to add `-tp ec` to the command line, this will tell the compiler to look in the `ec` directory for template files (where tp is template path). The run script should look like this:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl -tp ec
+ec build Tutorial ec/Space.edl ec/Configuration.edl -tp ec
 ```
 
 #### Step 4
@@ -270,7 +270,7 @@ units {
 Now we need to update our `run.sh` script to include the new `Units.edl` file. The `run.sh` script should look like this:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Units.edl -tp ec
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Units.edl -tp ec
 ```
 
 #### Step 5

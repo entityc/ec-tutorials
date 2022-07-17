@@ -748,7 +748,7 @@ Now we need to make two changes to our run script: first, add `ec/Domains.edl` t
 Edit `run.sh` and make it look like:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Units.edl ec/Domains.edl -tp ec/templates
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Units.edl ec/Domains.edl -tp ec/templates
 ```
 
 #### Step 5

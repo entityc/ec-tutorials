@@ -3,8 +3,8 @@ configuration Tutorial
     templates {
         import from TemplatesRepository
         template DatabaseTemplate {}
-        template DTOTemplate in "data/DTOTemplate" {}
-        template ModelTemplate in "data/ModelTemplate" {}
+        template DTOTemplate in "data" {}
+        template ModelTemplate in "data" {}
         template APITemplate {}
     }
 }

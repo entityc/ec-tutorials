@@ -1,16 +1,14 @@
 $[domain DTO]
 $[log]
-===========
-    DTO
-===========
+=========== DTO ===========
     $[foreach entity in space.entities]
 
-Class> ${entity|domain|fullname}
+Class: ${entity|domain|fullname}
         $[if entity.hasPrimaryKey]
-    PK>     ${entity.primaryKeyAttribute|domain|name}
+    PK:     ${entity.primaryKeyAttribute|domain|name}
         $[/if]
         $[foreach attribute in (entity|domain).attributes]
-    Member> ${attribute|name}
+    Member: ${attribute|name}
         $[/foreach]
     $[/foreach]
 $[/log]

@@ -97,7 +97,7 @@ Change your working directory to the `Session2` directory.
 
 On the command line, type:
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl
+ec build Tutorial ec/Space.edl ec/Configuration.edl
 ```
 
 If all went well you should see no errors, just simply returns.

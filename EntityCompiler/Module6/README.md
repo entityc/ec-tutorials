@@ -51,12 +51,12 @@ The `path` is either an absolute path or a relative path. If you specify a relat
 
 For a git repository on **Github**, there are more parameters you need to set:
 
-|Parameter|Description|
-| -------	| ---------	|
-| `organization`|The name of the github organization owning the repository.|
-| `name`| The name of the repository.	| 
-| `path`| An optional path inside the git repository where you would like this repository declaration to be rooted.	| 
-| `tag`|An optional tag from which to pull the files from the git repository. This is how you can implement revision control.|
+|Parameter| Description                                                                                                                                                                                                      |
+| -------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `organization`| The name of the github organization owning the repository.                                                                                                                                                       |
+| `name`| The name of the repository.	                                                                                                                                                                                     | 
+| `path`| An optional path inside the git repository where you would like this repository declaration to be rooted.	                                                                                                       | 
+| `tag`| An optional tag from which to pull the files from the git repository. This is how you can implement revision control. It can also be a branch name which would allow you to control a release of files with git. |
 
 For example:
 
@@ -172,7 +172,7 @@ This specialized domain definition assumes you import the original domain defini
 
 Here we will use the same github repository that manages this tutorial from which to import model elements.
 
-We will start with the solution of Module 5 Session 3 and transform it to use repositories and imports. The `repo` folder is already populated with the files you will need to import.
+We will start with the solution of Module 4 Session 3 and transform it to use repositories and imports. The `repo` folder is already populated with the files you will need to import.
 
 #### Step 1
 
@@ -185,14 +185,12 @@ Inside the `space Space {}` block we'll first define a repository for importing 
         type github
         organization "entityc"
         name "ec-tutorials"
-        path "Module7/Session2/repo/entities"
-        tag "e1.0.0"
+        path "Module6/Session3/repo/entities"
+        tag "main"
     }
 ```
 
-Notice the `path` takes us not just to the `repo` folder but also to the `entities` subfolder inside it.
-
-> Instead of prefixing our tag with a `v` for version, we will use `e` for entity (version). This way we can have tags for entity versions independent of the other model elements.
+Notice the `path` takes us not just to the `repo` folder but also to the `entities` subfolder inside it. Also note we use the tag "main" so that we are always pulling from the official released version of these files.
 
 Now we want to import the files. Each module was placed into its own `.edl` file so we will import three files as follows:
 
@@ -231,14 +229,12 @@ The parts that we deleted will instead be imported. Edit `Spaces.edl` again and 
         type github
         organization "entityc"
         name "ec-tutorials"
-        path "Module7/Session2/repo/domains"
-        tag "d1.0.0"
+        path "Module6/Session2/repo/domains"
+        tag "main"
     }
 ```
 
 This time we are pointing to the `domains` subfolder of the `repo` folder.
-
-> Again, note that our `tag` starts with a `d` for domain (version).
 
 Each of the domains have been placed into their own files so we will import each one as follows:
 
@@ -256,13 +252,11 @@ Since we will be importing all of what is contained in the `Units.edl` file you 
         organization "entityc"
         name "ec-tutorials"
         path "Module7/Session2/repo/standards"
-        tag "s1.0.0"
+        tag "main"
     }
 ```
 
 Again, it points to a `standards` subfolder of the `repo` folder. This repository can be used for more than units, it can also be used to store language definitions.
-
-> Again, note that our `tag` starts with a `s` for standards (version).
 
 Below this we can import the units as follows:
 
@@ -273,7 +267,7 @@ Below this we can import the units as follows:
 Since we are no longer going to read in our local `Units.edl` file, we should remove it from the `run.sh` script, it should now look like this:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl -tp ec/templates
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl -tp ec/templates
 ```
 
 #### Step 4
@@ -284,7 +278,7 @@ Now its time to run:
 ./run.sh
 ```
 
-The output should be identical to that of Module 5 Session 3.
+The output should be identical to that of Module 4 Session 3.
 
 #### Step 5
 
@@ -408,7 +402,7 @@ Notice how for the `DTOTemplate` and `ModelTemplate` their files were stored in 
 Now that we are going to import the templates we don't need to specify a template path on the command line. Edit `run.sh` and remove the `-tp` option. It should now look like:
 
 ```
-ec -c Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl
+ec build Tutorial ec/Space.edl ec/Configuration.edl ec/Domains.edl
 ```
 
 > If you plan to also have some local templates you can continue using this command line option.
@@ -422,15 +416,3 @@ It's time to run:
 ```
 
 The output should look the same as the previous session (with the repository tags being the same).
-
-#### Step 5
-
-As in the last session, lets change the tag in our repository definition to use upgraded templates. Edit `Space.edl` and for `TemplatesRepository` change its `tag` to `t1.1.0`.
-
-Run the compiler again:
-
-```
-./run.sh
-```
-
-The difference in the template code is just minor, the output should basically have the same information but slight changes in the formatting.
